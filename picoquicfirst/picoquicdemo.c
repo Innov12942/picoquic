@@ -88,7 +88,7 @@
 #endif
 
 static const int default_server_port = 4443;
-static const char* default_server_name = "::";
+static const char* default_server_name = "localhost";
 static const char* ticket_store_filename = "demo_ticket_store.bin";
 static const char* token_store_filename = "demo_token_store.bin";
 
@@ -165,6 +165,7 @@ int quic_server(const char* server_name, int server_port,
     /* Open a UDP socket */
     ret = picoquic_open_server_sockets(&server_sockets, server_port);
 
+    // printf("ret : %d\n", ret);
     /* Wait for packets and process them */
     if (ret == 0) {
         current_time = picoquic_current_time();
@@ -1043,6 +1044,7 @@ void usage()
 
 int main(int argc, char** argv)
 {
+    debug_set_stream(stdout);
     const char * solution_dir = NULL;
     const char * server_name = default_server_name;
     const char * server_cert_file = NULL;
@@ -1257,6 +1259,8 @@ int main(int argc, char** argv)
             picoquic_get_input_path(default_server_key_file, sizeof(default_server_key_file), solution_dir, SERVER_KEY_FILE) == 0) {
             server_key_file = default_server_key_file;
         }
+
+        // printf("server_cert_file : %s\n", server_cert_file);
 
         /* Run as server */
         printf("Starting Picoquic server (v%s) on port %d, server name = %s, just_once = %d, do_retry = %d\n",

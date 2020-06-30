@@ -1138,7 +1138,7 @@ int picoquic_master_tlscontext(picoquic_quic_t* quic,
                 ret = set_sign_certificate_from_key_file(key_file_name, ctx);
             }
         }
-
+// printf("!ret:%d\n", ret);
         if (ret == 0) {
             och = (ptls_on_client_hello_t*)malloc(sizeof(ptls_on_client_hello_t) + sizeof(picoquic_quic_t*));
             if (och != NULL) {
@@ -1227,6 +1227,7 @@ int picoquic_master_tlscontext(picoquic_quic_t* quic,
         }
     }
 
+    // printf("ret:%d\n", ret);
     return ret;
 }
 

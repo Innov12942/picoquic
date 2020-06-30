@@ -86,6 +86,13 @@ find_package(PTLS REQUIRED)
 message(STATUS "picotls/include: ${PTLS_INCLUDE_DIRS}" )
 message(STATUS "picotls libraries: ${PTLS_LIBRARIES}" )
 
+if (APPLE)
+    # This is a bug in CMake that causes it to prefer the system version over
+    # the one in the specified ROOT folder.
+    set(OPENSSL_CRYPTO_LIBRARY ${OPENSSL_ROOT_DIR}/lib/libcrypto.dylib CACHE FILEPATH "" FORCE)
+    set(OPENSSL_SSL_LIBRARY ${OPENSSL_ROOT_DIR}/lib/libssl.dylib CACHE FILEPATH "" FORCE)
+endif()
+
 find_package(OpenSSL )
 message(STATUS "root: ${OPENSSL_ROOT_DIR}")
 message(STATUS "OpenSSL_VERSION: ${OPENSSL_VERSION}")
